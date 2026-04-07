@@ -1,3 +1,4 @@
+import app
 from data.database import save_order, get_all_orders
 from products import create_product_download
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -31,7 +32,7 @@ def process_orders(app):
             "customer": order.customer,
             "date": order.date_placed_local.isoformat(),
         }
-
+    try:
         response = requests.post(
             app.config["FINANCE_PACKAGE_URL"] + "/ProcessPayment",
             json=payload
@@ -43,6 +44,8 @@ def process_orders(app):
 
         order.set_as_processed()
         save_order(order)
+    except Exception as e:
+        app.logger.exception("Error processing order {id}".format(id = order.id))
 
 def get_queue_of_orders_to_process():
     allOrders = get_all_orders()
