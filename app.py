@@ -58,6 +58,7 @@ def new_order():
 @app.route("/scenario", methods=["POST"])
 def set_scenario():
     scenario = request.form["scenario"]
+    app.logger.info(f"Scenario endpoint called with: {scenario}")
 
     if scenario == 'BrokenOrder':
         product = 'Product from the future'
