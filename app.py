@@ -7,8 +7,7 @@ from data.database import initialise_database, add_order, clear_orders, count_or
 from scheduled_jobs import initialise_scheduled_jobs
 from products import create_product_download
 import requests
-import logging
-logging.basicConfig(level=logging.INFO)
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -58,7 +57,6 @@ def new_order():
 @app.route("/scenario", methods=["POST"])
 def set_scenario():
     scenario = request.form["scenario"]
-    app.logger.info(f"Scenario endpoint called with: {scenario}")
 
     if scenario == 'BrokenOrder':
         product = 'Product from the future'
@@ -68,12 +66,12 @@ def set_scenario():
 
     if scenario == 'Reset':
         clear_orders()
-    app.logger.info("About to call finance endpoint")
+
     response = requests.post(
         app.config["FINANCE_PACKAGE_URL"] + "/scenario",
         json=scenario
     )
-    app.logger.info("Response from endpoint: " + response.text)
+    
     response.raise_for_status()
     return redirect('/')
 
