@@ -7,13 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
         # SET THESE
-        ACR_ADMIN_USERNAME: "<FILL ME IN>"
-        ACR_LOGIN_SERVER_URL: "<FILL ME IN>"
+        ACR_ADMIN_USERNAME: "tosimiacr"
+        ACR_LOGIN_SERVER_URL: "tosimiacr.azurecr.io"
         # SET THESE IN GITHUB
         ACR_ADMIN_PASSWORD: '${{ secrets.ACR_ADMIN_PASSWORD }}'
     # DECIDE WHETHER YOU WANT A BRANCH CHECK - if so remove the other "if"
-    # if: github.ref == 'refs/heads/main'
-    if: github.repository != 'corndeladmin/DevOps-Unit-10-Workshop'
+    if: github.ref == 'refs/heads/tosimi-unit10'
+    # if: github.repository != 'corndeladmin/DevOps-Unit-10-Workshop'
     steps:
       - name: test
         run: echo ${{ github.repository }}
