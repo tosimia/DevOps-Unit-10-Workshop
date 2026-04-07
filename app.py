@@ -67,7 +67,7 @@ def set_scenario():
 
     if scenario == 'Reset':
         clear_orders()
-
+    app.logger.info("About to call finance endpoint")
     response = requests.post(
         app.config["FINANCE_PACKAGE_URL"] + "/scenario",
         json=scenario
